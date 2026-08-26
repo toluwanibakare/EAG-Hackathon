@@ -1,0 +1,41 @@
+{
+  "name": "runda",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:api": "cd api && npm run dev",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "compile": "hardhat --config hardhat.config.cjs compile",
+    "node": "hardhat --config hardhat.config.cjs node",
+    "deploy:local": "hardhat --config hardhat.config.cjs run scripts/deploy.cjs --network localhost",
+    "deploy:testnet": "hardhat --config hardhat.config.cjs run scripts/deploy.cjs --network hskTestnet",
+    "allocate": "hardhat --config hardhat.config.cjs run scripts/allocate.cjs --network localhost"
+  },
+  "dependencies": {
+    "date-fns": "^4.4.0",
+    "lucide-react": "^1.34.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.2",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.6.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "dotenv": "^17.4.2",
+    "hardhat": "^2.29.1",
+    "oxlint": "^1.79.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.2"
+  }
+}
