@@ -5,9 +5,6 @@ import { useState } from 'react'
 export function WalletConnect() {
   const { address, isConnected } = useAccount()
   const { connect, connectors } = useConnect()
-  const connector = connectors.find(
-    (c: any) => c.name === 'WalletConnect' || c.id === 'walletConnect'
-  )
   const { disconnect } = useDisconnect()
   const [copied, setCopied] = useState(false)
 
