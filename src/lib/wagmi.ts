@@ -33,11 +33,12 @@ export const hskTestnet = {
 } as const
 
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { mainnet } from 'wagmi/chains'
 
 export const config = getDefaultConfig({
   appName: 'Runda',
   projectId: 'cd34d3d82a6fdf3d1cde0eef2a926f04', // 100% unrestricted project ID
-  chains: [hskMainnet, hskTestnet],
+  chains: [hskMainnet, hskTestnet, mainnet],
 })
 
 declare module 'wagmi' {

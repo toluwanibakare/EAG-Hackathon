@@ -16,15 +16,13 @@ if (localStorage.getItem('runda-dark') === 'true') {
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider 
-          theme={localStorage.getItem('runda-dark') === 'true' ? darkTheme() : lightTheme()}
-        >
-          <App />
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  </StrictMode>,
+  <WagmiProvider config={config}>
+    <QueryClientProvider client={queryClient}>
+      <RainbowKitProvider 
+        theme={localStorage.getItem('runda-dark') === 'true' ? darkTheme() : lightTheme()}
+      >
+        <App />
+      </RainbowKitProvider>
+    </QueryClientProvider>
+  </WagmiProvider>
 )
