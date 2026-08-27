@@ -17,6 +17,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <title>RUNDA</title>
+    <script>
+      window.global = window;
+    </script>
+    <script type="module">
+      import { Buffer } from 'https://esm.sh/buffer';
+      window.Buffer = Buffer;
+    </script>
   </head>
   <body>
     <div id="root"></div>
