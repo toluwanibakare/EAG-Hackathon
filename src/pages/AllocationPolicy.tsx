@@ -4,6 +4,7 @@ import { formatNaira } from '../lib/utils'
 import { PageContainer } from '../components/layout/PageContainer'
 import { Header } from '../components/layout/Header'
 import { FinosIcon } from '../components/icons/FinosIcons'
+import { SwipeableCard } from '../components/ui/SwipeableCard'
 import type { PolicyAllocation, PoolType, Pool } from '../types'
 import { generateId } from '../lib/utils'
 
@@ -182,75 +183,71 @@ export default function AllocationPolicy() {
           {allocations.map((alloc, index) => {
             const previewAmount = Math.round((PREVIEW_INCOME * alloc.percentage) / 100)
             return (
-              <div
+              <SwipeableCard
                 key={alloc.poolId}
-                className="bg-white dark:bg-[#1A2332] rounded-[16px] p-4 animate-fade-in"
-                style={{ animationDelay: `${index * 30}ms` }}
+                onDelete={allocations.length > 1 ? () => removeAllocation(alloc.poolId) : undefined}
+                // We could add onEdit here if needed
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <div
-                    className="flex items-center justify-center w-9 h-9 rounded-[10px] shrink-0"
-                    style={{ backgroundColor: alloc.color + '10' }}
-                  >
-                    <span style={{ color: alloc.color }}>
-                      <FinosIcon name={alloc.icon} size={18} />
+                <div
+                  className="bg-white dark:bg-[#1A2332] rounded-[20px] p-4 animate-fade-in shadow-sm border border-transparent"
+                  style={{ animationDelay: `${index * 30}ms` }}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div
+                      className="flex items-center justify-center w-9 h-9 rounded-[10px] shrink-0"
+                      style={{ backgroundColor: alloc.color + '10' }}
+                    >
+                      <span style={{ color: alloc.color }}>
+                        <FinosIcon name={alloc.icon} size={18} />
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-[13px] font-bold text-[#013D7C] dark:text-white block truncate tracking-[-0.01em]">
+                        {alloc.poolName}
+                      </span>
+                      <span className="text-[11px] text-gray-400 font-medium">
+                        {formatNaira(previewAmount)}
+                      </span>
+                    </div>
+                    <span
+                      className={`text-[16px] font-bold tabular-nums tracking-[-0.02em] ${
+                        alloc.percentage > 0 ? 'text-[#013D7C] dark:text-white' : 'text-gray-200 dark:text-gray-700'
+                      }`}
+                    >
+                      {alloc.percentage}%
                     </span>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-[13px] font-bold text-[#013D7C] dark:text-white block truncate tracking-[-0.01em]">
-                      {alloc.poolName}
-                    </span>
-                    <span className="text-[11px] text-gray-400 font-medium">
-                      {formatNaira(previewAmount)}
-                    </span>
+
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    step={1}
+                    value={alloc.percentage}
+                    onChange={(e) => updatePercentage(alloc.poolId, parseInt(e.target.value, 10))}
+                    className="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full appearance-none cursor-pointer"
+                  />
+
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="flex items-center gap-0.5">
+                      <button
+                        onClick={() => moveAllocation(index, -1)}
+                        disabled={index === 0}
+                        className="flex items-center justify-center w-7 h-7 rounded-[8px] text-gray-400 active:bg-gray-50 dark:active:bg-gray-800 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+                      >
+                        <FinosIcon name="chevron-up" size={16} />
+                      </button>
+                      <button
+                        onClick={() => moveAllocation(index, 1)}
+                        disabled={index === allocations.length - 1}
+                        className="flex items-center justify-center w-7 h-7 rounded-[8px] text-gray-400 active:bg-gray-50 dark:active:bg-gray-800 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+                      >
+                        <FinosIcon name="chevron-down" size={16} />
+                      </button>
+                    </div>
                   </div>
-                  <span
-                    className={`text-[16px] font-bold tabular-nums tracking-[-0.02em] ${
-                      alloc.percentage > 0 ? 'text-[#013D7C] dark:text-white' : 'text-gray-200 dark:text-gray-700'
-                    }`}
-                  >
-                    {alloc.percentage}%
-                  </span>
                 </div>
-
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  step={1}
-                  value={alloc.percentage}
-                  onChange={(e) => updatePercentage(alloc.poolId, parseInt(e.target.value, 10))}
-                  className="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full appearance-none cursor-pointer"
-                />
-
-                <div className="flex items-center justify-between mt-3">
-                  <div className="flex items-center gap-0.5">
-                    <button
-                      onClick={() => moveAllocation(index, -1)}
-                      disabled={index === 0}
-                      className="flex items-center justify-center w-7 h-7 rounded-[8px] text-gray-400 active:bg-gray-50 dark:active:bg-gray-800 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
-                    >
-                      <FinosIcon name="chevron-up" size={16} />
-                    </button>
-                    <button
-                      onClick={() => moveAllocation(index, 1)}
-                      disabled={index === allocations.length - 1}
-                      className="flex items-center justify-center w-7 h-7 rounded-[8px] text-gray-400 active:bg-gray-50 dark:active:bg-gray-800 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
-                    >
-                      <FinosIcon name="chevron-down" size={16} />
-                    </button>
-                  </div>
-
-                  {allocations.length > 1 && (
-                    <button
-                      onClick={() => removeAllocation(alloc.poolId)}
-                      className="flex items-center justify-center w-7 h-7 rounded-[8px] text-gray-300 dark:text-gray-600 active:text-[#C62828] active:bg-[#FFEBEE] transition-colors"
-                    >
-                      <FinosIcon name="trash" size={14} />
-                    </button>
-                  )}
-                </div>
-              </div>
+              </SwipeableCard>
             )
           })}
         </div>

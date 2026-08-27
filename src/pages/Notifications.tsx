@@ -10,6 +10,7 @@ export default function Notifications() {
   const navigate = useNavigate()
   const notifications = useStore((s) => s.notifications)
   const deleteNotification = useStore((s) => s.deleteNotification)
+  const markNotificationRead = useStore((s) => s.markNotificationRead)
 
   const handleNotificationClick = (id: string) => {
     markNotificationRead(id)

@@ -30,8 +30,8 @@ export function NotificationItem({ notification, onClick }: NotificationItemProp
   return (
     <button
       onClick={() => onClick?.(notification)}
-      className={`flex items-start gap-3 w-full py-4 px-1 text-left transition-colors duration-150 active:bg-gray-50 dark:active:bg-gray-800 ${
-        !notification.read ? 'bg-[#F0F4FF]/40 dark:bg-[#E8B931]/10' : ''
+      className={`flex items-start gap-3 w-full py-4 px-4 rounded-[20px] text-left transition-colors duration-150 active:bg-gray-50 dark:active:bg-gray-800 ${
+        !notification.read ? 'bg-[#F0F4FF] dark:bg-[#E8B931]/10' : 'bg-transparent'
       }`}
     >
       <div className={`flex items-center justify-center w-9 h-9 rounded-[10px] shrink-0 ${style.bg}`}>

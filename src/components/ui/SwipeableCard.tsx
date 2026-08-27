@@ -19,6 +19,7 @@ export function SwipeableCard({ children, onEdit, onDelete }: SwipeableCardProps
   const maxSwipe = (onEdit ? buttonWidth : 0) + (onDelete ? buttonWidth : 0)
 
   const onTouchStart = useCallback((e: TouchEvent) => {
+    if ((e.target as HTMLElement).tagName === 'INPUT') return
     startX.current = e.touches[0].clientX
     startY.current = e.touches[0].clientY
     locked.current = null
@@ -108,7 +109,7 @@ export function SwipeableCard({ children, onEdit, onDelete }: SwipeableCardProps
         )}
       </div>
       <div
-        className={`relative z-10 will-change-transform shadow-sm ${!isDragging ? 'transition-transform duration-300 ease-out' : ''}`}
+        className={`relative z-10 will-change-transform bg-white dark:bg-[#0B1320] rounded-[20px] shadow-sm ${!isDragging ? 'transition-transform duration-300 ease-out' : ''}`}
         style={{ transform: `translateX(${offset}px)` }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
