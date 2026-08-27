@@ -12,10 +12,8 @@
     "compile": "hardhat --config hardhat.config.cjs compile",
     "node": "hardhat --config hardhat.config.cjs node",
     "deploy:local": "hardhat --config hardhat.config.cjs run scripts/deploy.cjs --network localhost",
-    "deploy:testnet": "hardhat --config hardhat.config.cjs run scripts/deploy.cjs --network hskTestnet",
-    "allocate": "hardhat --config hardhat.config.cjs run scripts/allocate.cjs --network localhost"
-  },
   "dependencies": {
+    "@rainbow-me/rainbowkit": "^2.2.0",
     "@supabase/supabase-js": "^2.112.4",
     "@tanstack/react-query": "^5.102.4",
     "date-fns": "^4.4.0",

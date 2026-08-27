@@ -27,7 +27,7 @@ import { supabase } from '../../lib/supabase'
 export function Onboarding() {
   const [step, setStep] = useState<'slides' | 'profile'>('slides')
   const [slideIdx, setSlideIdx] = useState(0)
-  const { isConnected, address } = useAccount()
+  const { address } = useAccount()
   const setOnboarded = useStore((s) => s.setOnboarded)
   const setWalletAddress = useStore((s) => s.setWalletAddress)
   const setUserName = useStore((s) => s.setUserName)
@@ -43,7 +43,6 @@ export function Onboarding() {
 
   const checkUserInDb = async (walletAddress: string) => {
     try {
-      setCheckingDb(true)
       const { data: user } = await supabase
         .from('users')
         .select('*')
@@ -78,8 +77,6 @@ export function Onboarding() {
       }
     } catch (err) {
       console.error('Error fetching user from DB:', err)
-    } finally {
-      setCheckingDb(false)
     }
     return false
   }
@@ -151,7 +148,7 @@ export function Onboarding() {
               </button>
             ) : (
               <ConnectButton.Custom>
-                {({ account, chain, openChainModal, openConnectModal, mounted }) => {
+                {({ account, chain, openChainModal, openConnectModal, mounted }: any) => {
                   const connected = mounted && account && chain;
                   return (
                     <button 
