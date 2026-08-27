@@ -61,9 +61,7 @@ export function Onboarding() {
     setOnboarded(true)
   }
 
-  if (isConnected && step === 'slides') {
-    setStep('profile')
-  }
+
 
   const darkMode = useStore((s) => s.darkMode)
 
@@ -117,11 +115,11 @@ export function Onboarding() {
               </button>
             ) : (
               <button 
-                onClick={handleConnect}
-                disabled={isPending}
+                onClick={isConnected ? () => setStep('profile') : handleConnect}
+                disabled={isPending && !isConnected}
                 className="w-full h-[56px] rounded-2xl bg-[#013D7C] dark:bg-[#E8B931] text-white dark:text-[#013D7C] font-bold text-[16px] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
               >
-                {isPending ? 'Connecting...' : 'Connect Wallet'}
+                {(isPending && !isConnected) ? 'Connecting...' : (isConnected ? 'Wallet Connected - Continue' : 'Connect Wallet')}
               </button>
             )}
           </div>

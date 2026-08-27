@@ -105,7 +105,7 @@ export default function More() {
 
         <button
           onClick={() => {
-            if (window.confirm('Are you sure you want to log out?')) {
+            if (window.confirm('Are you sure you want to disconnect your wallet?')) {
               disconnect()
               logout()
               navigate('/')
@@ -116,7 +116,7 @@ export default function More() {
           <div className="flex items-center justify-center w-8 h-8 rounded-[8px] bg-white dark:bg-[#C62828]/20">
             <FinosIcon name="log-out" size={16} className="text-[#C62828]" />
           </div>
-          <span className="flex-1 text-[13px] font-semibold text-[#C62828]">Log Out</span>
+          <span className="flex-1 text-[13px] font-semibold text-[#C62828]">Disconnect Wallet</span>
         </button>
 
         <a
