@@ -11,6 +11,7 @@ interface AppState {
   setPin: (pin: string) => void
   unlock: (pin: string) => boolean
   lock: () => void
+  logout: () => void
 
   hasOnboarded: boolean
   setOnboarded: (val: boolean) => void
@@ -101,6 +102,21 @@ export const useStore = create<AppState>((set, get) => ({
     return false
   },
   lock: () => set({ isLocked: true }),
+  logout: () => {
+    localStorage.removeItem('runda-pin')
+    localStorage.removeItem('runda-onboarded')
+    localStorage.removeItem('runda-username')
+    localStorage.removeItem('runda-wallet')
+    localStorage.removeItem('runda-pfp')
+    set({
+      isLocked: true,
+      pin: '',
+      hasOnboarded: false,
+      userName: '',
+      walletAddress: '',
+      profilePicture: null
+    })
+  },
 
   hasOnboarded: localStorage.getItem('runda-onboarded') === 'true',
   setOnboarded: (val) => {

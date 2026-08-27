@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useDisconnect } from 'wagmi'
 import { useStore } from '../store/useStore'
 import { PageContainer } from '../components/layout/PageContainer'
 import { Header } from '../components/layout/Header'
@@ -14,8 +15,10 @@ interface MenuItem {
 
 export default function More() {
   const navigate = useNavigate()
+  const { disconnect } = useDisconnect()
   const notifications = useStore((s) => s.notifications)
   const lock = useStore((s) => s.lock)
+  const logout = useStore((s) => s.logout)
   const unreadCount = notifications.filter((n) => !n.read).length
 
   const menuSections: { title: string; items: MenuItem[] }[] = [
@@ -98,6 +101,22 @@ export default function More() {
           </div>
           <span className="flex-1 text-[13px] font-semibold text-[#013D7C] dark:text-white">Lock App</span>
           <FinosIcon name="chevron-right" size={16} className="text-gray-300 dark:text-gray-600" />
+        </button>
+
+        <button
+          onClick={() => {
+            if (window.confirm('Are you sure you want to log out?')) {
+              disconnect()
+              logout()
+              navigate('/')
+            }
+          }}
+          className="flex items-center gap-3 w-full bg-[#FFEBEE] dark:bg-[#C62828]/10 rounded-[20px] px-4 py-3.5 active:scale-[0.98] transition-transform duration-150 mb-6"
+        >
+          <div className="flex items-center justify-center w-8 h-8 rounded-[8px] bg-white dark:bg-[#C62828]/20">
+            <FinosIcon name="log-out" size={16} className="text-[#C62828]" />
+          </div>
+          <span className="flex-1 text-[13px] font-semibold text-[#C62828]">Log Out</span>
         </button>
 
         <a
