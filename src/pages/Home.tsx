@@ -24,35 +24,41 @@ export default function Home() {
 
   return (
     <PageContainer padded={false}>
-      <div className="sticky top-0 z-40 bg-[#F7F8FB]/80 dark:bg-[#0B1320]/80 backdrop-blur-xl border-b border-transparent">
-        <div className="flex items-center justify-between px-4 pt-10 pb-4">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/profile')}
-              className="flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-[#013D7C] to-[#0256B0] dark:from-[#E8B931] dark:to-[#F1D06A] active:scale-95 transition-all duration-150 shrink-0 shadow-md shadow-[#013D7C]/10 dark:shadow-none"
-            >
-              <FinosIcon name="user" size={18} className="text-white dark:text-[#013D7C]" />
-            </button>
-            <div>
-              <p className="text-[12px] text-gray-500 font-medium leading-none mb-1">{getGreeting()}</p>
-              <p className="text-[18px] font-extrabold text-[#013D7C] dark:text-white tracking-[-0.02em] leading-none">{userName}</p>
-            </div>
+      <div className="sticky top-0 z-40 bg-[#F7F8FB] dark:bg-[#0B1320] overflow-hidden" style={{ height: '110px' }}>
+        <div className="flex justify-center items-end h-full pb-1 pt-4">
+          <img src={darkMode ? "/logo_white.PNG" : "/logo.PNG"} alt="RUNDA" className="w-[100px] h-[100px] rounded-[22px] object-contain" />
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between px-4 pb-2">
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => navigate('/profile')}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-[#013D7C] dark:bg-[#E8B931] active:scale-95 transition-all duration-150 shrink-0"
+          >
+            <FinosIcon name="user" size={16} className="text-white dark:text-[#013D7C]" />
+          </button>
+          <div>
+            <p className="text-[12px] text-gray-500 font-medium leading-none mb-1">{getGreeting()}</p>
+            <p className="text-[18px] font-extrabold text-[#013D7C] dark:text-white tracking-[-0.02em] leading-none">{userName}</p>
           </div>
-          <div className="flex items-center gap-2.5">
-            <button
-              onClick={() => navigate('/notifications')}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-[#1A2332] shadow-sm shadow-gray-200/50 dark:shadow-none active:scale-95 transition-all duration-150 relative"
-            >
-              <FinosIcon name="bell" size={18} className="text-[#013D7C] dark:text-gray-300" />
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-red-500 border-2 border-white dark:border-[#1A2332]" />
-            </button>
-            <button
-              onClick={() => navigate('/more')}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-[#1A2332] shadow-sm shadow-gray-200/50 dark:shadow-none active:scale-95 transition-all duration-150"
-            >
-              <FinosIcon name="settings" size={18} className="text-[#013D7C] dark:text-gray-300" />
-            </button>
-          </div>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => navigate('/notifications')}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 transition-colors duration-150 relative"
+          >
+            <FinosIcon name="bell" size={18} className="text-gray-500 dark:text-gray-400" />
+            {notifications.some(n => !n.read) && (
+              <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-red-500 border-2 border-gray-100 dark:border-gray-800" />
+            )}
+          </button>
+          <button
+            onClick={() => navigate('/more')}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 transition-colors duration-150"
+          >
+            <FinosIcon name="settings" size={18} className="text-gray-500 dark:text-gray-400" />
+          </button>
         </div>
       </div>
 
