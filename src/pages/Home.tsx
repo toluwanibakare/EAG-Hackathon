@@ -16,6 +16,7 @@ export default function Home() {
   const userName = useStore((s) => s.userName)
   const pools = useStore((s) => s.pools)
   const transactions = useStore((s) => s.transactions)
+  const notifications = useStore((s) => s.notifications)
   const goals = useStore((s) => s.goals)
   const removePool = useStore((s) => s.removePool)
   const recentTxns = transactions.slice(0, 3)
