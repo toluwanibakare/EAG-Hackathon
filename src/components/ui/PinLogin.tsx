@@ -23,6 +23,12 @@ export function PinLogin() {
           if (next === confirmDigits) {
             setPin(next)
             setSuccess(true)
+            const walletAddress = useStore.getState().walletAddress
+            if (walletAddress) {
+              import('../../lib/supabase').then(({ supabase }) => {
+                supabase.from('users').update({ pin: next }).eq('wallet_address', walletAddress).then()
+              })
+            }
           } else {
             setError(true)
             setTimeout(() => {
