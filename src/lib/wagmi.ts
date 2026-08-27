@@ -36,7 +36,7 @@ import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 
 export const config = getDefaultConfig({
   appName: 'Runda',
-  projectId: '3b84db967566cf2c7e090f7a55225492', // Wagmi Docs Demo ID or Real ID
+  projectId: 'deb868e4a51e3827e01fd18c9b2bc896', // User provided WalletConnect Project ID
   chains: [hskMainnet, hskTestnet],
 })
 
