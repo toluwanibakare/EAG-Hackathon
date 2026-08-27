@@ -8,17 +8,17 @@ const SLIDES = [
   {
     title: 'Welcome to Runda',
     description: 'The Programmable Envelope Financial OS. Every naira should have a job.',
-    image: 'https://images.unsplash.com/photo-1614036634955-ae5e90f2ac77?auto=format&fit=crop&q=80&w=600&h=600',
+    image: 'https://image.pollinations.ai/prompt/A%20fun%20hand-drawn%203D%20cartoon%20illustration%20of%20a%20magical%20glowing%20money%20envelope%20floating%20over%20a%20futuristic%20bank%20vault%20vibrant%20colors%20solid%20light%20blue%20background?nologo=true&seed=4',
   },
   {
     title: 'Smart Allocations',
     description: 'Automatically route your income into savings, investments, and expenses using on-chain smart contracts.',
-    image: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=600&h=600',
+    image: 'https://image.pollinations.ai/prompt/A%20fun%20hand-drawn%203D%20cartoon%20illustration%20of%20colorful%20digital%20coins%20sorting%20into%20labeled%20jars%20vibrant%20colors%20solid%20light%20blue%20background?nologo=true&seed=5',
   },
   {
     title: 'Web3 Powered',
     description: 'Connect your wallet on the HSK Chain to get started with true financial sovereignty.',
-    image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=600&h=600',
+    image: 'https://image.pollinations.ai/prompt/A%20fun%20hand-drawn%203D%20cartoon%20illustration%20of%20a%20digital%20wallet%20connected%20to%20a%20glowing%20blockchain%20vibrant%20colors%20solid%20light%20blue%20background?nologo=true&seed=6',
   }
 ]
 
