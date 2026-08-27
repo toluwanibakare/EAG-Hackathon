@@ -1,5 +1,4 @@
-import { http, createConfig } from 'wagmi'
-import { injected } from 'wagmi/connectors'
+// Wagmi & RainbowKit setup
 import {
   HSK_MAINNET_CHAIN_ID,
   HSK_TESTNET_RPC,
@@ -33,15 +32,12 @@ export const hskTestnet = {
   },
 } as const
 
-export const config = createConfig({
+import { getDefaultConfig } from '@rainbow-me/rainbowkit'
+
+export const config = getDefaultConfig({
+  appName: 'Runda',
+  projectId: 'b2d075ebf91b7d5fbe7c433104ab359b', // Replace with your actual WalletConnect Project ID
   chains: [hskMainnet, hskTestnet],
-  connectors: [
-    injected(),
-  ],
-  transports: {
-    [HSK_MAINNET_CHAIN_ID]: http(HSK_MAINNET_RPC),
-    [133]: http(HSK_TESTNET_RPC),
-  },
 })
 
 declare module 'wagmi' {

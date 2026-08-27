@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useStore } from '../../store/useStore'
-import { useAccount, useConnect } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { FinosIcon } from '../icons/FinosIcons'
-import { injected } from 'wagmi/connectors'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const SLIDES = [
   {
@@ -28,7 +28,6 @@ export function Onboarding() {
   const [step, setStep] = useState<'slides' | 'profile'>('slides')
   const [slideIdx, setSlideIdx] = useState(0)
   const { isConnected, address } = useAccount()
-  const { connect, isPending } = useConnect()
   const setOnboarded = useStore((s) => s.setOnboarded)
   const setWalletAddress = useStore((s) => s.setWalletAddress)
   const setUserName = useStore((s) => s.setUserName)
@@ -83,21 +82,6 @@ export function Onboarding() {
       setCheckingDb(false)
     }
     return false
-  }
-
-  const handleConnect = () => {
-    connect({ connector: injected() }, {
-      onSuccess: async (data) => {
-        const found = await checkUserInDb(data.accounts[0])
-        if (!found) {
-          setStep('profile')
-        }
-      },
-      onError: (err) => {
-        console.error(err)
-        setStep('profile')
-      }
-    })
   }
 
   const handleFinish = async () => {
@@ -166,21 +150,33 @@ export function Onboarding() {
                 Continue
               </button>
             ) : (
-              <button 
-                onClick={isConnected ? () => {
-                  if (address) {
-                    checkUserInDb(address).then((found) => {
-                      if (!found) setStep('profile')
-                    })
-                  } else {
-                    setStep('profile')
-                  }
-                } : handleConnect}
-                disabled={isPending && !isConnected}
-                className="w-full h-[56px] rounded-[20px] bg-[#013D7C] dark:bg-[#E8B931] text-white dark:text-[#013D7C] font-bold text-[16px] active:scale-[0.98] transition-transform flex items-center justify-center gap-2 shadow-xl"
-              >
-                {(isPending && !isConnected) ? 'Connecting...' : (isConnected ? 'Wallet Connected - Continue' : 'Connect Wallet')}
-              </button>
+              <ConnectButton.Custom>
+                {({ account, chain, openChainModal, openConnectModal, mounted }) => {
+                  const connected = mounted && account && chain;
+                  return (
+                    <button 
+                      onClick={() => {
+                        if (!connected) {
+                          openConnectModal();
+                        } else if (chain.unsupported) {
+                          openChainModal();
+                        } else {
+                          if (address) {
+                            checkUserInDb(address).then((found) => {
+                              if (!found) setStep('profile')
+                            })
+                          } else {
+                            setStep('profile')
+                          }
+                        }
+                      }}
+                      className="w-full h-[56px] rounded-[20px] bg-[#013D7C] dark:bg-[#E8B931] text-white dark:text-[#013D7C] font-bold text-[16px] active:scale-[0.98] transition-transform flex items-center justify-center gap-2 shadow-xl"
+                    >
+                      {!mounted ? 'Loading...' : !connected ? 'Connect Wallet' : chain.unsupported ? 'Wrong Network' : 'Wallet Connected - Continue'}
+                    </button>
+                  );
+                }}
+              </ConnectButton.Custom>
             )}
           </div>
         </div>

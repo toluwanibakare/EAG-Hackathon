@@ -6,6 +6,9 @@ import { config } from './lib/wagmi'
 import './index.css'
 import App from './App'
 
+import '@rainbow-me/rainbowkit/styles.css'
+import { RainbowKitProvider, lightTheme, darkTheme } from '@rainbow-me/rainbowkit'
+
 if (localStorage.getItem('runda-dark') === 'true') {
   document.documentElement.classList.add('dark')
 }
@@ -16,7 +19,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <RainbowKitProvider 
+          theme={localStorage.getItem('runda-dark') === 'true' ? darkTheme() : lightTheme()}
+        >
+          <App />
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   </StrictMode>,
