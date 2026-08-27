@@ -2,7 +2,6 @@ import { useAccount, useReadContract, useWriteContract, useWaitForTransactionRec
 import { useState } from 'react'
 import { ArrowDownToLine, ArrowUpFromLine } from 'lucide-react'
 import { POOL_VAULT_ABI, USDT_ADDRESS, formatUsdt, parseUsdt } from '../../lib/hsk'
-import { formatUsd } from '../../lib/currency'
 
 interface PoolOnChainProps {
   poolId: string
@@ -10,7 +9,7 @@ interface PoolOnChainProps {
 }
 
 export function PoolOnChain({ poolId, poolName }: PoolOnChainProps) {
-  const { address, isConnected } = useAccount()
+  const { isConnected } = useAccount()
   const [depositAmount, setDepositAmount] = useState('')
   const [withdrawAmount, setWithdrawAmount] = useState('')
 

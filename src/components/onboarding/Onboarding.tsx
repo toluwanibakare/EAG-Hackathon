@@ -35,7 +35,6 @@ export function Onboarding() {
   const setPin = useStore((s) => s.setPin)
 
   const [nameInput, setNameInput] = useState('')
-  const [checkingDb, setCheckingDb] = useState(false)
 
   const handleNextSlide = () => {
     if (slideIdx < SLIDES.length - 1) {
