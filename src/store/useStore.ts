@@ -12,6 +12,18 @@ interface AppState {
   unlock: (pin: string) => boolean
   lock: () => void
 
+  hasOnboarded: boolean
+  setOnboarded: (val: boolean) => void
+
+  userName: string
+  setUserName: (name: string) => void
+
+  walletAddress: string
+  setWalletAddress: (address: string) => void
+
+  profilePicture: string | null
+  setProfilePicture: (pic: string | null) => void
+
   balanceHidden: boolean
   toggleBalance: () => void
 
@@ -40,6 +52,9 @@ interface AppState {
 
   aiLanguage: string
   setAiLanguage: (lang: string) => void
+
+  currency: string
+  setCurrency: (curr: string) => void
 
   incomes: Income[]
   addIncome: (income: Income) => void
@@ -72,7 +87,7 @@ export const useStore = create<AppState>((set, get) => ({
   },
 
   isLocked: true,
-  pin: localStorage.getItem('runda-pin') || '8212',
+  pin: localStorage.getItem('runda-pin') || '',
   setPin: (pin: string) => {
     localStorage.setItem('runda-pin', pin)
     set({ pin, isLocked: false })
@@ -86,6 +101,31 @@ export const useStore = create<AppState>((set, get) => ({
     return false
   },
   lock: () => set({ isLocked: true }),
+
+  hasOnboarded: localStorage.getItem('runda-onboarded') === 'true',
+  setOnboarded: (val) => {
+    localStorage.setItem('runda-onboarded', String(val))
+    set({ hasOnboarded: val })
+  },
+
+  userName: localStorage.getItem('runda-username') || '',
+  setUserName: (name) => {
+    localStorage.setItem('runda-username', name)
+    set({ userName: name })
+  },
+
+  walletAddress: localStorage.getItem('runda-wallet') || '',
+  setWalletAddress: (address) => {
+    localStorage.setItem('runda-wallet', address)
+    set({ walletAddress: address })
+  },
+
+  profilePicture: localStorage.getItem('runda-pfp') || null,
+  setProfilePicture: (pic) => {
+    if (pic) localStorage.setItem('runda-pfp', pic)
+    else localStorage.removeItem('runda-pfp')
+    set({ profilePicture: pic })
+  },
 
   balanceHidden: false,
   toggleBalance: () => set((s) => ({ balanceHidden: !s.balanceHidden })),
@@ -151,6 +191,12 @@ export const useStore = create<AppState>((set, get) => ({
   setAiLanguage: (lang) => {
     localStorage.setItem('runda-lang', lang)
     set({ aiLanguage: lang })
+  },
+
+  currency: localStorage.getItem('runda-currency') || 'cNGN',
+  setCurrency: (curr) => {
+    localStorage.setItem('runda-currency', curr)
+    set({ currency: curr })
   },
 
   incomes: mockIncome,

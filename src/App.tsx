@@ -6,6 +6,7 @@ import { PinLogin } from './components/ui/PinLogin'
 import { ChatWidget } from './components/chat/ChatWidget'
 import { PullToRefresh } from './components/ui/PullToRefresh'
 import { useStore } from './store/useStore'
+import { Onboarding } from './components/onboarding/Onboarding'
 import Home from './pages/Home'
 import Money from './pages/Money'
 import Goals from './pages/Goals'
@@ -79,6 +80,7 @@ function AppShell() {
 export default function App() {
   const darkMode = useStore((s) => s.darkMode)
   const isLocked = useStore((s) => s.isLocked)
+  const hasOnboarded = useStore((s) => s.hasOnboarded)
   const [showSplash, setShowSplash] = useState(true)
 
   useEffect(() => {
@@ -94,9 +96,15 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <AppShell />
-      {showSplash && <SplashScreen onFinish={handleSplash} />}
-      {!showSplash && isLocked && <PinLogin />}
+      {showSplash ? (
+        <SplashScreen onFinish={handleSplash} />
+      ) : !hasOnboarded ? (
+        <Onboarding />
+      ) : isLocked ? (
+        <PinLogin />
+      ) : (
+        <AppShell />
+      )}
     </BrowserRouter>
   )
 }

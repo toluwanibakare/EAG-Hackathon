@@ -13,6 +13,7 @@ import { FinosIcon } from '../components/icons/FinosIcons'
 export default function Home() {
   const navigate = useNavigate()
   const darkMode = useStore((s) => s.darkMode)
+  const userName = useStore((s) => s.userName)
   const pools = useStore((s) => s.pools)
   const transactions = useStore((s) => s.transactions)
   const goals = useStore((s) => s.goals)
@@ -39,7 +40,7 @@ export default function Home() {
             </button>
             <div>
               <p className="text-[11px] text-gray-400 dark:text-gray-500 font-medium leading-none mb-1">{getGreeting()}</p>
-              <p className="text-[17px] font-bold text-[#013D7C] dark:text-white tracking-[-0.02em] leading-none">{userProfile.name}</p>
+              <p className="text-[17px] font-bold text-[#013D7C] dark:text-white tracking-[-0.02em] leading-none">{userName}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">

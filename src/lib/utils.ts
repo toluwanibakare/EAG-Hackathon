@@ -1,14 +1,21 @@
+import { useStore } from '../store/useStore'
+
 export function formatNaira(amount: number): string {
-  return '₦' + amount.toLocaleString('en-NG')
+  const currency = useStore.getState().currency
+  if (currency === 'USDT' || currency === 'USDC') {
+    return '$' + (amount / 1500).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  }
+  return currency === 'cNGN' ? 'c₦' + amount.toLocaleString('en-NG') : '₦' + amount.toLocaleString('en-NG')
 }
 
 export function formatNairaShort(amount: number): string {
-  if (amount >= 1000000) {
-    return '₦' + (amount / 1000000).toFixed(1) + 'M'
-  }
-  if (amount >= 1000) {
-    return '₦' + (amount / 1000).toFixed(0) + 'K'
-  }
+  const currency = useStore.getState().currency
+  const val = (currency === 'USDT' || currency === 'USDC') ? amount / 1500 : amount
+  const prefix = (currency === 'USDT' || currency === 'USDC') ? '$' : (currency === 'cNGN' ? 'c₦' : '₦')
+  
+  if (val >= 1000000) return prefix + (val / 1000000).toFixed(1) + 'M'
+  if (val >= 1000) return prefix + (val / 1000).toFixed(0) + 'K'
+  
   return formatNaira(amount)
 }
 

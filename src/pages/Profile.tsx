@@ -2,15 +2,15 @@ import { useState } from 'react'
 import { PageContainer } from '../components/layout/PageContainer'
 import { Header } from '../components/layout/Header'
 import { FinosIcon } from '../components/icons/FinosIcons'
-import { userProfile } from '../data/mockData'
+import { useStore } from '../store/useStore'
 
 export default function Profile() {
-  const [name, setName] = useState(userProfile.name)
-  const [email, setEmail] = useState('tolu@email.com')
-  const [phone, setPhone] = useState('+234 800 000 0000')
+  const { userName, walletAddress, setUserName } = useStore()
+  const [name, setName] = useState(userName)
   const [saved, setSaved] = useState(false)
 
   const handleSave = () => {
+    setUserName(name)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -34,7 +34,7 @@ export default function Profile() {
 
         <div className="bg-white dark:bg-[#1A2332] rounded-[20px] p-5 space-y-4">
           <div>
-            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Full Name</label>
+            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Display Name</label>
             <input
               type="text"
               value={name}
@@ -44,23 +44,10 @@ export default function Profile() {
           </div>
 
           <div>
-            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-gray-50 dark:bg-gray-800 rounded-[12px] px-4 py-3 text-[14px] font-semibold text-[#013D7C] dark:text-white outline-none focus:ring-2 focus:ring-[#013D7C]/20 transition-all"
-            />
-          </div>
-
-          <div>
-            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Phone Number</label>
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="w-full bg-gray-50 dark:bg-gray-800 rounded-[12px] px-4 py-3 text-[14px] font-semibold text-[#013D7C] dark:text-white outline-none focus:ring-2 focus:ring-[#013D7C]/20 transition-all"
-            />
+            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Wallet Address</label>
+            <div className="w-full bg-gray-50 dark:bg-gray-800 rounded-[12px] px-4 py-3 text-[14px] font-mono text-[#013D7C] dark:text-white opacity-70">
+              {walletAddress || 'Not connected'}
+            </div>
           </div>
         </div>
 

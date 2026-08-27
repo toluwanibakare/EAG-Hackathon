@@ -34,6 +34,7 @@ export default function TransactionDetail() {
   const { transactionId } = useParams<{ transactionId: string }>()
   const navigate = useNavigate()
   const transactions = useStore((s) => s.transactions)
+  const darkMode = useStore((s) => s.darkMode)
 
   const txn = transactions.find((t) => t.id === transactionId)
 
@@ -56,11 +57,22 @@ export default function TransactionDetail() {
     ? transactions.find((t) => t.id === txn.relatedIncomeId)
     : null
 
+  const downloadReceipt = async () => {
+    const el = document.getElementById('receipt-container')
+    if (!el) return
+    const html2canvas = (await import('html2canvas')).default
+    const canvas = await html2canvas(el, { backgroundColor: darkMode ? '#0B1320' : '#F7F8FB', scale: 2 })
+    const link = document.createElement('a')
+    link.download = `Receipt_${txn.reference}.png`
+    link.href = canvas.toDataURL('image/png')
+    link.click()
+  }
+
   return (
     <PageContainer>
       <Header title="Transaction" showBack />
 
-      <div className="pt-4 space-y-4">
+      <div id="receipt-container" className="pt-4 space-y-4 px-1 pb-4">
         {/* Amount header */}
         <div className="bg-white dark:bg-[#1A2332] rounded-[20px] p-6 text-center animate-fade-in">
           <p className={`text-[32px] font-bold tracking-[-0.03em] tabular-nums ${isCredit ? 'text-[#2E7D32]' : 'text-[#013D7C] dark:text-white'}`}>
@@ -134,6 +146,16 @@ export default function TransactionDetail() {
             </button>
           </div>
         )}
+        {/* Download Receipt */}
+        <div className="pt-4 pb-8 animate-fade-in" style={{ animationDelay: '320ms' }}>
+          <button
+            onClick={downloadReceipt}
+            className="w-full bg-[#013D7C] dark:bg-[#E8B931] text-white dark:text-[#013D7C] rounded-[16px] p-4 font-bold text-[14px] flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-lg shadow-[#013D7C]/20 dark:shadow-[#E8B931]/20"
+          >
+            <FinosIcon name="download" size={18} />
+            Download Receipt
+          </button>
+        </div>
       </div>
     </PageContainer>
   )
