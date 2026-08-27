@@ -13,6 +13,7 @@
     "node": "hardhat --config hardhat.config.cjs node",
     "deploy:local": "hardhat --config hardhat.config.cjs run scripts/deploy.cjs --network localhost",
     "deploy:testnet": "hardhat --config hardhat.config.cjs run scripts/deploy.cjs --network hskTestnet",
+    "deploy:mainnet": "hardhat --config hardhat.config.cjs run scripts/deploy.cjs --network hskMainnet",
     "allocate": "hardhat --config hardhat.config.cjs run scripts/allocate.cjs --network localhost"
   },
   "dependencies": {

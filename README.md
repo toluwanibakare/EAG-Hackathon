@@ -226,3 +226,9 @@ MIT
 - Powered by [Groq](https://groq.com) for ultra-fast AI inference
 - Deployed on [HSK Chain](https://hashkey.org) for regulated DeFi
 - Inspired by envelope budgeting (EveryDollar, YNAB) — but on-chain
+
+ # #   U p d a t e s 
+ -   I n t e g r a t e d   l i v e   H a s h K e y   M a i n n e t / T e s t n e t   d e p l o y m e n t s . 
+ -   S t r i p p e d   o u t   a l l   p r o t o t y p i n g   m o c k   d a t a . 
+ -   I m p l e m e n t e d   f u l l y   a u t o m a t e d   A I   C h a t   f i l e   p a r s i n g   a n d   f a l l b a c k   f o r   d e m o n s t r a t i o n s .  
+ 

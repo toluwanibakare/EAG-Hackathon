@@ -36,6 +36,11 @@ export function TransactionRow({ transaction, onClick }: TransactionRowProps) {
         <p className="text-[11px] text-gray-400 font-medium mt-0.5">
           {transaction.poolName || transaction.category || formatDateShort(transaction.date)}
         </p>
+        {transaction.id && transaction.id.startsWith('0x') && (
+          <div className="flex items-center gap-1 mt-0.5 text-[10px] text-blue-500 font-mono" onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(transaction.id); alert('Hash copied!'); }}>
+            {transaction.id.slice(0, 6)}...{transaction.id.slice(-4)} <FinosIcon name="copy" size={10} />
+          </div>
+        )}
       </div>
 
       <div className="text-right shrink-0">
