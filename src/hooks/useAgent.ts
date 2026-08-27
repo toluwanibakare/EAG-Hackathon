@@ -43,16 +43,19 @@ export function useAgent(): UseAgentReturn {
             name: 'Macbook Pro',
             targetAmount: 1500000,
             currentAmount: 0,
-            targetDate: '2026-12-31',
-            icon: 'laptop'
+            deadline: '2026-12-31',
+            contributionRate: 10,
+            state: 'active',
+            poolId: 'savings',
+            createdAt: new Date().toISOString()
           })
         } else if (msg.includes('allocate') || msg.includes('policy')) {
           content = "I've drafted a new smart allocation policy for you. I suggest routing 50% to Savings, 30% to Expenses, and 20% to Investments. You can confirm this allocation in the chat."
           allocations = [{
             pools: [
-              { name: 'Savings', percentage: 50, type: 'savings', restriction: 'locked', icon: 'piggy-bank', color: '#013D7C' },
-              { name: 'Expenses', percentage: 30, type: 'expense', restriction: 'available', icon: 'wallet', color: '#E8B931' },
-              { name: 'Investments', percentage: 20, type: 'investment', restriction: 'strict', icon: 'trending-up', color: '#2E7D32' },
+              { name: 'Savings', percentage: 50, type: 'savings' as const, restriction: 'goal_locked' as const, icon: 'piggy-bank', color: '#013D7C' },
+              { name: 'Expenses', percentage: 30, type: 'expense' as const, restriction: 'available' as const, icon: 'wallet', color: '#E8B931' },
+              { name: 'Investments', percentage: 20, type: 'investment' as const, restriction: 'restricted' as const, icon: 'trending-up', color: '#2E7D32' },
             ]
           }]
         }

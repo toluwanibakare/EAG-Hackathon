@@ -15,8 +15,8 @@ export default function Withdrawal() {
   const navigate = useNavigate()
   const { pools, addTransaction } = useStore()
   
-  const { sendTransaction, data: hash, isPending, error: sendError } = useSendTransaction()
-  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash })
+  const { sendTransaction, data: hash, error: sendError } = useSendTransaction()
+  const { isSuccess } = useWaitForTransactionReceipt({ hash })
 
   const [step, setStep] = useState<Step>('select-pool')
   const [selectedPoolId, setSelectedPoolId] = useState('')
@@ -87,8 +87,7 @@ export default function Withdrawal() {
         time: new Date().toTimeString().slice(0, 5),
         status: 'completed',
         reference: `WDW-${Date.now()}`,
-        reason: reason.trim() || undefined,
-        icon: 'arrow-up-right'
+        reason: reason.trim() || undefined
       })
       setStep('success')
     } else if (sendError) {
