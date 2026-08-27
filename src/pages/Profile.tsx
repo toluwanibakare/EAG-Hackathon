@@ -22,11 +22,11 @@ export default function Profile() {
       <div className="pt-4 space-y-4">
         <div className="flex flex-col items-center mb-2">
           <div className="relative">
-            <div className="flex items-center justify-center w-24 h-24 rounded-full bg-[#013D7C] dark:bg-[#E8B931]">
+            <div className="flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-[#013D7C] to-[#0256B0] dark:from-[#E8B931] dark:to-[#F1D06A] shadow-xl shadow-[#013D7C]/20 dark:shadow-[#E8B931]/20">
               <FinosIcon name="user" size={40} className="text-white dark:text-[#013D7C]" />
             </div>
-            <button className="absolute -bottom-1 -right-1 flex items-center justify-center w-8 h-8 rounded-full bg-white dark:bg-[#1A2332] shadow-md border border-gray-100 dark:border-gray-700">
-              <FinosIcon name="edit" size={14} className="text-[#013D7C] dark:text-[#E8B931]" />
+            <button className="absolute bottom-0 right-0 flex items-center justify-center w-9 h-9 rounded-full bg-white dark:bg-[#1A2332] shadow-lg border border-gray-100 dark:border-gray-700 active:scale-95 transition-all">
+              <FinosIcon name="edit" size={16} className="text-[#013D7C] dark:text-gray-300" />
             </button>
           </div>
           <p className="text-[11px] text-gray-400 mt-2">Tap to change photo</p>

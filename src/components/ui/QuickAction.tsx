@@ -23,11 +23,13 @@ export function QuickAction({ icon, label, onClick, className = '' }: QuickActio
       className={`flex flex-col items-center justify-center gap-2.5 ${className}`}
     >
       <div
-        className={`flex items-center justify-center w-[52px] h-[52px] rounded-[16px] ${config.bg} transition-all duration-200 active:scale-90`}
+        className={`flex items-center justify-center w-[56px] h-[56px] rounded-[20px] bg-white dark:bg-[#1A2332] shadow-sm shadow-gray-200/50 dark:shadow-none transition-all duration-200 active:scale-95`}
       >
-        <FinosIcon name={config.icon} size={22} className={config.iconColor} />
+        <div className={`flex items-center justify-center w-10 h-10 rounded-xl ${config.bg}`}>
+          <FinosIcon name={config.icon} size={18} className={config.iconColor} />
+        </div>
       </div>
-      <span className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 leading-tight text-center">
+      <span className="text-[12px] font-bold text-[#013D7C] dark:text-gray-300 leading-tight text-center tracking-tight">
         {label}
       </span>
     </button>
