@@ -45,7 +45,7 @@ export default function More() {
 
   return (
     <PageContainer>
-      <Header title="More" />
+      <Header title="More" showBack />
 
       <div className="pt-4">
         {menuSections.map((section, si) => (

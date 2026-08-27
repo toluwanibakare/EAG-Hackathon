@@ -6,13 +6,15 @@ const router = Router()
 
 router.post('/', async (req, res) => {
   try {
-    const { message, history = [] } = req.body
+    const { message, history = [], language = 'Pidgin English' } = req.body
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ error: 'Message is required' })
     }
 
+    const systemPromptWithLang = `${SYSTEM_PROMPT}\n\nIMPORTANT: You must respond entirely in ${language}.`
+
     const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: systemPromptWithLang },
       ...history.map(m => ({
         role: m.role === 'assistant' ? 'assistant' : 'user',
         content: m.content,

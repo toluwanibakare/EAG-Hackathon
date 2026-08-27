@@ -24,7 +24,7 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
 export default function Preferences() {
   const [pushNotif, setPushNotif] = useState(true)
   const [emailNotif, setEmailNotif] = useState(false)
-  const { darkMode, toggleDarkMode } = useStore()
+  const { darkMode, toggleDarkMode, aiLanguage, setAiLanguage } = useStore()
 
   return (
     <PageContainer>
@@ -61,6 +61,25 @@ export default function Preferences() {
               <FinosIcon name="chevron-right" size={16} className="text-gray-300 dark:text-gray-600" />
             </div>
           </button>
+          <div className="px-4 py-3.5 flex items-center justify-between border-b border-gray-50 dark:border-gray-700/50">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-8 h-8 rounded-[8px] bg-gray-50 dark:bg-gray-800">
+                <FinosIcon name="message-square" size={16} className="text-gray-500 dark:text-gray-400" />
+              </div>
+              <span className="text-[13px] font-semibold text-[#013D7C] dark:text-white">AI Language</span>
+            </div>
+            <select
+              value={aiLanguage}
+              onChange={(e) => setAiLanguage(e.target.value)}
+              className="bg-transparent text-[12px] text-gray-400 dark:text-gray-500 font-medium outline-none text-right cursor-pointer"
+            >
+              <option value="Pidgin English">Pidgin English</option>
+              <option value="English">English</option>
+              <option value="Yoruba">Yoruba</option>
+              <option value="Igbo">Igbo</option>
+              <option value="Hausa">Hausa</option>
+            </select>
+          </div>
           <div className="px-4 py-3.5 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="flex items-center justify-center w-8 h-8 rounded-[8px] bg-gray-50 dark:bg-gray-800">

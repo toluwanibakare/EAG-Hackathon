@@ -9,7 +9,7 @@ import { EmptyState } from '../components/ui/EmptyState'
 export default function Notifications() {
   const navigate = useNavigate()
   const notifications = useStore((s) => s.notifications)
-  const markNotificationRead = useStore((s) => s.markNotificationRead)
+  const deleteNotification = useStore((s) => s.deleteNotification)
 
   const handleNotificationClick = (id: string) => {
     markNotificationRead(id)
@@ -42,7 +42,7 @@ export default function Notifications() {
             {notifications.map((notif) => (
               <SwipeableCard
                 key={notif.id}
-                onDelete={() => markNotificationRead(notif.id)}
+                onDelete={() => deleteNotification(notif.id)}
               >
                 <NotificationItem
                   notification={notif}

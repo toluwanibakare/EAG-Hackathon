@@ -11,7 +11,7 @@ export function ChatWidget() {
   const messages = useStore((s) => s.chatMessages)
   const addMessage = useStore((s) => s.addChatMessage)
   const [input, setInput] = useState('')
-  const { loading, chat } = useAgent()
+  const { loading, chat, parseImage, parsePdf, parseSpreadsheet } = useAgent()
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const [hasGreeted, setHasGreeted] = useState(false)
@@ -65,16 +65,40 @@ export function ChatWidget() {
     const file = e.target.files?.[0]
     if (!file) return
     const reader = new FileReader()
-    reader.onload = () => {
+    reader.onload = async () => {
       const data = reader.result as string
-      const type = file.type.includes('pdf') ? 'pdf' : file.type.includes('sheet') || file.type.includes('csv') ? 'spreadsheet' : 'image'
-      addMessage({
+      const type = (file.type.includes('pdf') ? 'pdf' : file.type.includes('sheet') || file.type.includes('csv') ? 'spreadsheet' : 'image') as 'pdf' | 'spreadsheet' | 'image'
+      
+      const fileMsg = {
         id: generateId(),
-        role: 'user',
-        content: `Analyzing ${file.name}...`,
+        role: 'user' as const,
+        content: `I uploaded a file: ${file.name}`,
         timestamp: new Date().toISOString(),
         attachment: { type, name: file.name, data },
-      })
+      }
+      addMessage(fileMsg)
+
+      let result;
+      if (type === 'pdf') {
+        result = await parsePdf(file)
+      } else if (type === 'spreadsheet') {
+        result = await parseSpreadsheet(file)
+      } else {
+        result = await parseImage(data)
+      }
+
+      if (result && result.pools && result.pools.length > 0) {
+        const prompt = `I uploaded a file named ${file.name}. Here is the extracted data: ${JSON.stringify(result.pools)}. Can you summarize this and ask if I want to apply these allocations?`
+        const reply = await chat(prompt, [...messages, fileMsg])
+        if (reply) addMessage(reply)
+      } else {
+        addMessage({
+          id: generateId(),
+          role: 'assistant',
+          content: "Sorry, I couldn't extract any valid allocation data from that file. Make sure it contains clear percentages or amounts.",
+          timestamp: new Date().toISOString()
+        })
+      }
     }
     reader.readAsDataURL(file)
     e.target.value = ''

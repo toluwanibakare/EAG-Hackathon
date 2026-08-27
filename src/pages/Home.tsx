@@ -9,7 +9,6 @@ import { PoolCard } from '../components/ui/PoolCard'
 import { SwipeableCard } from '../components/ui/SwipeableCard'
 import { TransactionRow } from '../components/ui/TransactionRow'
 import { FinosIcon } from '../components/icons/FinosIcons'
-import { PullToRefresh } from '../components/ui/PullToRefresh'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -24,9 +23,8 @@ export default function Home() {
 
   return (
     <PageContainer padded={false}>
-      <PullToRefresh onRefresh={() => Promise.resolve()}>
-        <div className="sticky top-0 z-40 bg-[#F7F8FB] dark:bg-[#0B1320] overflow-hidden" style={{ height: '88px' }}>
-          <div className="flex justify-center items-end h-full pb-1">
+        <div className="sticky top-0 z-40 bg-[#F7F8FB] dark:bg-[#0B1320] overflow-hidden" style={{ height: '110px' }}>
+          <div className="flex justify-center items-end h-full pb-1 pt-4">
             <img src={darkMode ? "/logo_white.PNG" : "/logo.PNG"} alt="RUNDA" className="w-[100px] h-[100px] rounded-[22px] object-contain" />
           </div>
         </div>
@@ -44,12 +42,20 @@ export default function Home() {
               <p className="text-[17px] font-bold text-[#013D7C] dark:text-white tracking-[-0.02em] leading-none">{userProfile.name}</p>
             </div>
           </div>
-          <button
-            onClick={() => navigate('/notifications')}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 transition-colors duration-150"
-          >
-            <FinosIcon name="bell" size={18} className="text-gray-500 dark:text-gray-400" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate('/notifications')}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 transition-colors duration-150"
+            >
+              <FinosIcon name="bell" size={18} className="text-gray-500 dark:text-gray-400" />
+            </button>
+            <button
+              onClick={() => navigate('/more')}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 transition-colors duration-150"
+            >
+              <FinosIcon name="settings" size={18} className="text-gray-500 dark:text-gray-400" />
+            </button>
+          </div>
         </div>
 
         <section className="px-4 animate-fade-in" style={{ animationDelay: '0ms' }}>
@@ -138,7 +144,7 @@ export default function Home() {
             </div>
           </section>
         )}
-      </PullToRefresh>
+      
     </PageContainer>
   )
 }

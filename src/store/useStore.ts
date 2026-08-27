@@ -36,6 +36,10 @@ interface AppState {
 
   notifications: Notification[]
   markNotificationRead: (id: string) => void
+  deleteNotification: (id: string) => void
+
+  aiLanguage: string
+  setAiLanguage: (lang: string) => void
 
   incomes: Income[]
   addIncome: (income: Income) => void
@@ -138,6 +142,16 @@ export const useStore = create<AppState>((set, get) => ({
         n.id === id ? { ...n, read: true } : n
       ),
     })),
+  deleteNotification: (id) =>
+    set((s) => ({
+      notifications: s.notifications.filter((n) => n.id !== id),
+    })),
+
+  aiLanguage: localStorage.getItem('runda-lang') || 'Pidgin English',
+  setAiLanguage: (lang) => {
+    localStorage.setItem('runda-lang', lang)
+    set({ aiLanguage: lang })
+  },
 
   incomes: mockIncome,
   addIncome: (income) => set((s) => ({ incomes: [income, ...s.incomes] })),
