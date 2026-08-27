@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import { WagmiProvider } from 'wagmi'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { config } from './lib/wagmi'
+import { config, hskTestnet } from './lib/wagmi'
 import './index.css'
 import App from './App'
 
@@ -19,6 +19,7 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <RainbowKitProvider 
         theme={localStorage.getItem('runda-dark') === 'true' ? darkTheme() : lightTheme()}
+        initialChain={hskTestnet}
       >
         <App />
       </RainbowKitProvider>
