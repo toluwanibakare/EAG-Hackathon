@@ -37,6 +37,17 @@ function ScrollToTop() {
 }
 
 function AppShell() {
+  const toggleChat = useStore((s) => s.toggleChat)
+  const chatOpen = useStore((s) => s.chatOpen)
+  const chatMessages = useStore((s) => s.chatMessages)
+  
+  useEffect(() => {
+    // If there are no chat messages yet, open the chat automatically to greet the user
+    if (chatMessages.length === 0 && !chatOpen) {
+      toggleChat()
+    }
+  }, [chatMessages.length, chatOpen, toggleChat])
+
   const handleRefresh = async () => {
     // Wait a bit to show the spinner
     await new Promise(r => setTimeout(r, 600));

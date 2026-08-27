@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSendTransaction, useWaitForTransactionReceipt } from 'wagmi'
+import { parseEther } from 'viem'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore'
 import { formatNaira, generateId } from '../lib/utils'
@@ -12,6 +14,9 @@ type Step = 'select-pool' | 'enter-amount' | 'enter-destination' | 'confirm' | '
 export default function Withdrawal() {
   const navigate = useNavigate()
   const { pools, addTransaction } = useStore()
+  
+  const { sendTransaction, data: hash, isPending, error: sendError } = useSendTransaction()
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash })
 
   const [step, setStep] = useState<Step>('select-pool')
   const [selectedPoolId, setSelectedPoolId] = useState('')
@@ -58,13 +63,21 @@ export default function Withdrawal() {
   }
 
   const handleConfirm = async () => {
-    setStep('processing')
-    await new Promise((r) => setTimeout(r, 2000))
+    try {
+      setStep('processing')
+      sendTransaction({
+        to: destination as `0x${string}`,
+        value: parseEther(amount)
+      })
+    } catch (e) {
+      setStep('failed')
+    }
+  }
 
-    const success = Math.random() > 0.1
-    if (success) {
+  useEffect(() => {
+    if (isSuccess) {
       addTransaction({
-        id: generateId(),
+        id: hash || generateId(),
         type: 'withdrawal',
         amount: numAmount,
         description: `Withdrawal to ${destinationName || destination}`,
@@ -75,12 +88,13 @@ export default function Withdrawal() {
         status: 'completed',
         reference: `WDW-${Date.now()}`,
         reason: reason.trim() || undefined,
+        icon: 'arrow-up-right'
       })
       setStep('success')
-    } else {
+    } else if (sendError) {
       setStep('failed')
     }
-  }
+  }, [isSuccess, sendError, hash])
 
   const handleBack = () => {
     if (step === 'enter-amount') setStep('select-pool')

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type { Pool, Transaction, AllocationPolicy, SavingsGoal, Notification, Income, ChatMessage } from '../types'
-import { defaultPools, defaultPolicy, mockTransactions, mockGoals, mockNotifications, mockIncome } from '../data/mockData'
+import { defaultPools, defaultPolicy } from '../data/mockData'
 
 interface AppState {
   darkMode: boolean
@@ -202,7 +202,7 @@ export const useStore = create<AppState>((set, get) => ({
       pools: s.pools.filter((p) => p.id !== id && p.parentId !== id),
     })),
 
-  transactions: mockTransactions,
+  transactions: [],
   addTransaction: (txn) => set((s) => ({ transactions: [txn, ...s.transactions] })),
 
   policies: [defaultPolicy],
@@ -228,14 +228,14 @@ export const useStore = create<AppState>((set, get) => ({
       ),
     })),
 
-  goals: mockGoals,
+  goals: [],
   addGoal: (goal) => set((s) => ({ goals: [...s.goals, goal] })),
   updateGoal: (id, updates) =>
     set((s) => ({
       goals: s.goals.map((g) => (g.id === id ? { ...g, ...updates } : g)),
     })),
 
-  notifications: mockNotifications,
+  notifications: [],
   markNotificationRead: (id) =>
     set((s) => ({
       notifications: s.notifications.map((n) =>
@@ -313,7 +313,7 @@ export const useStore = create<AppState>((set, get) => ({
     }
   },
 
-  incomes: mockIncome,
+  incomes: [],
   addIncome: (income) => set((s) => ({ incomes: [income, ...s.incomes] })),
 
   getTotalBalance: () => get().pools.filter((p) => !p.parentId).reduce((sum, p) => sum + p.balance, 0),
