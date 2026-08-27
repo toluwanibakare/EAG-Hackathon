@@ -22,9 +22,18 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
 }
 
 export default function Preferences() {
-  const [pushNotif, setPushNotif] = useState(true)
-  const [emailNotif, setEmailNotif] = useState(false)
-  const { darkMode, toggleDarkMode, aiLanguage, setAiLanguage, currency, setCurrency } = useStore()
+  const { 
+    darkMode, 
+    toggleDarkMode, 
+    aiLanguage, 
+    setAiLanguage, 
+    currency, 
+    setCurrency,
+    pushNotifications,
+    setPushNotifications,
+    emailNotifications,
+    setEmailNotifications
+  } = useStore()
 
   return (
     <PageContainer>
@@ -38,7 +47,7 @@ export default function Preferences() {
               </div>
               <span className="text-[13px] font-semibold text-[#013D7C] dark:text-white">Push Notifications</span>
             </div>
-            <Toggle on={pushNotif} onToggle={() => setPushNotif(!pushNotif)} />
+            <Toggle on={pushNotifications} onToggle={() => setPushNotifications(!pushNotifications)} />
           </div>
           <div className="px-4 py-3.5 flex items-center justify-between border-b border-gray-50 dark:border-gray-700/50">
             <div className="flex items-center gap-3">
@@ -47,7 +56,7 @@ export default function Preferences() {
               </div>
               <span className="text-[13px] font-semibold text-[#013D7C] dark:text-white">Email Notifications</span>
             </div>
-            <Toggle on={emailNotif} onToggle={() => setEmailNotif(!emailNotif)} />
+            <Toggle on={emailNotifications} onToggle={() => setEmailNotifications(!emailNotifications)} />
           </div>
           <div className="px-4 py-3.5 flex items-center justify-between border-b border-gray-50 dark:border-gray-700/50">
             <div className="flex items-center gap-3">

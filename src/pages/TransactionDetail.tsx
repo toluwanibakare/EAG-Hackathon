@@ -72,9 +72,13 @@ export default function TransactionDetail() {
     <PageContainer>
       <Header title="Transaction" showBack />
 
-      <div id="receipt-container" className="pt-4 space-y-4 px-1 pb-4">
+      <div id="receipt-container" className="pt-4 space-y-4 px-1 pb-4 relative">
+        <div className="flex justify-center pb-2">
+          <img src={darkMode ? "/logo_white.PNG" : "/logo.PNG"} alt="RUNDA" className="w-16 h-16 rounded-xl object-contain opacity-80" />
+        </div>
+        
         {/* Amount header */}
-        <div className="bg-white dark:bg-[#1A2332] rounded-[20px] p-6 text-center animate-fade-in">
+        <div className="bg-white dark:bg-[#1A2332] rounded-[20px] p-6 text-center animate-fade-in shadow-sm">
           <p className={`text-[32px] font-bold tracking-[-0.03em] tabular-nums ${isCredit ? 'text-[#2E7D32]' : 'text-[#013D7C] dark:text-white'}`}>
             {isCredit ? '+' : txn.type === 'allocation' ? '' : '-'}{formatNaira(txn.amount)}
           </p>
@@ -88,7 +92,7 @@ export default function TransactionDetail() {
         </div>
 
         {/* Details */}
-        <div className="bg-white dark:bg-[#1A2332] rounded-[20px] overflow-hidden animate-fade-in" style={{ animationDelay: '80ms' }}>
+        <div className="bg-white dark:bg-[#1A2332] rounded-[20px] overflow-hidden animate-fade-in shadow-sm" style={{ animationDelay: '80ms' }}>
           <div className="px-5 pt-4 pb-2">
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Details</p>
           </div>
@@ -110,7 +114,7 @@ export default function TransactionDetail() {
         </div>
 
         {/* Info */}
-        <div className="bg-white dark:bg-[#1A2332] rounded-[20px] overflow-hidden animate-fade-in" style={{ animationDelay: '160ms' }}>
+        <div className="bg-white dark:bg-[#1A2332] rounded-[20px] overflow-hidden animate-fade-in shadow-sm" style={{ animationDelay: '160ms' }}>
           <div className="px-5 pt-4 pb-2">
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Info</p>
           </div>
@@ -129,7 +133,7 @@ export default function TransactionDetail() {
             </h3>
             <button
               onClick={() => navigate(`/transaction/${relatedIncome.id}`)}
-              className="w-full bg-white dark:bg-[#1A2332] rounded-[16px] p-4 text-left active:bg-gray-50 dark:active:bg-gray-800 transition-colors duration-150"
+              className="w-full bg-white dark:bg-[#1A2332] rounded-[16px] p-4 text-left active:bg-gray-50 dark:active:bg-gray-800 transition-colors duration-150 shadow-sm"
             >
               <div className="flex items-center gap-3">
                 <div className="flex items-center justify-center w-9 h-9 rounded-[10px] bg-[#E8F5E9] shrink-0">
@@ -146,16 +150,17 @@ export default function TransactionDetail() {
             </button>
           </div>
         )}
-        {/* Download Receipt */}
-        <div className="pt-4 pb-8 animate-fade-in" style={{ animationDelay: '320ms' }}>
-          <button
-            onClick={downloadReceipt}
-            className="w-full bg-[#013D7C] dark:bg-[#E8B931] text-white dark:text-[#013D7C] rounded-[16px] p-4 font-bold text-[14px] flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-lg shadow-[#013D7C]/20 dark:shadow-[#E8B931]/20"
-          >
-            <FinosIcon name="download" size={18} />
-            Download Receipt
-          </button>
-        </div>
+      </div>
+      
+      {/* Download Receipt */}
+      <div className="px-1 pt-2 pb-8 animate-fade-in" style={{ animationDelay: '320ms' }}>
+        <button
+          onClick={downloadReceipt}
+          className="w-full bg-[#013D7C] dark:bg-[#E8B931] text-white dark:text-[#013D7C] rounded-[16px] p-4 font-bold text-[14px] flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-lg shadow-[#013D7C]/20 dark:shadow-[#E8B931]/20"
+        >
+          <FinosIcon name="download" size={18} />
+          Download Receipt
+        </button>
       </div>
     </PageContainer>
   )

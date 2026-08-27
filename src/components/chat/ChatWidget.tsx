@@ -22,7 +22,7 @@ export function ChatWidget() {
       addMessage({
         id: generateId(),
         role: 'assistant',
-        content: "Welcome to Runda! I dey your programmable finance assistant. How I fit help you today? You fit ask me about your pools, allocation, or we fit analyze a receipt together.",
+        content: "Welcome to Runda! I be your programmable finance assistant. How I fit help you today? You fit ask me about your pools, allocation, or we fit analyze a receipt together.",
         timestamp: new Date().toISOString(),
       })
     }
@@ -109,7 +109,7 @@ export function ChatWidget() {
       {!chatOpen && (
         <button
           onClick={toggleChat}
-          className="fixed bottom-[80px] right-4 z-[90] w-14 h-14 rounded-full bg-[#013D7C] dark:bg-[#E8B931] text-white dark:text-[#013D7C] shadow-lg shadow-[#013D7C]/30 dark:shadow-[#E8B931]/30 flex items-center justify-center active:scale-90 transition-all duration-200"
+          className="fixed bottom-[80px] right-4 z-[90] w-14 h-14 rounded-full bg-gradient-to-tr from-[#013D7C] to-[#0256B0] dark:from-[#E8B931] dark:to-[#F1D06A] text-white dark:text-[#013D7C] shadow-lg shadow-[#013D7C]/30 dark:shadow-[#E8B931]/30 flex items-center justify-center active:scale-90 transition-all duration-200"
         >
           <MessageCircle size={24} />
         </button>
@@ -117,24 +117,24 @@ export function ChatWidget() {
 
       {chatOpen && (
         <div className="fixed inset-0 z-[100] flex flex-col">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={toggleChat} />
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={toggleChat} />
 
-          <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-[#0B1320] rounded-t-[24px] max-h-[85vh] flex flex-col animate-slide-up">
-            <div className="flex items-center justify-between px-5 pt-4 pb-2 shrink-0">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#013D7C] to-[#2E5196] flex items-center justify-center">
-                  <span className="text-[11px] font-bold text-white">R</span>
+          <div className="absolute bottom-0 left-0 right-0 bg-[#F7F8FB] dark:bg-[#0B1320] rounded-t-[32px] max-h-[85vh] flex flex-col animate-slide-up shadow-2xl overflow-hidden border-t border-white/20 dark:border-white/5">
+            <div className="flex items-center justify-between px-6 pt-5 pb-4 shrink-0 bg-white/80 dark:bg-[#1A2332]/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#013D7C] to-[#2E5196] dark:from-[#E8B931] dark:to-[#F1D06A] flex items-center justify-center shadow-md">
+                  <span className="text-[13px] font-extrabold text-white dark:text-[#013D7C]">R</span>
                 </div>
                 <div>
-                  <h2 className="text-[15px] font-bold text-[#013D7C] dark:text-white leading-none">Runda AI</h2>
-                  <span className="text-[10px] text-gray-400 font-medium">Finance Assistant</span>
+                  <h2 className="text-[16px] font-extrabold text-[#013D7C] dark:text-white leading-tight">Runda AI</h2>
+                  <span className="text-[11px] text-gray-500 font-semibold tracking-wide uppercase">Finance Assistant</span>
                 </div>
               </div>
               <button
                 onClick={toggleChat}
-                className="flex items-center justify-center w-8 h-8 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-400 active:bg-gray-200 dark:active:bg-gray-700 transition-colors duration-150"
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 active:bg-gray-200 dark:active:bg-gray-700 transition-colors duration-150"
               >
-                <X size={15} />
+                <X size={16} />
               </button>
             </div>
 

@@ -57,6 +57,23 @@ export function Onboarding() {
         if (user.pin) {
           setPin(user.pin)
         }
+        if (user.currency) {
+          useStore.getState().setCurrency(user.currency)
+        }
+        if (user.language) {
+          useStore.getState().setAiLanguage(user.language)
+        }
+        if (user.dark_mode !== null && user.dark_mode !== undefined) {
+          if (useStore.getState().darkMode !== user.dark_mode) {
+             useStore.getState().toggleDarkMode()
+          }
+        }
+        if (user.hide_balance !== null && user.hide_balance !== undefined) {
+          if (useStore.getState().balanceHidden !== user.hide_balance) {
+             useStore.getState().toggleBalance()
+          }
+        }
+
         setWalletAddress(walletAddress)
         setOnboarded(true)
         return true

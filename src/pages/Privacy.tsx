@@ -21,8 +21,7 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
 }
 
 export default function Privacy() {
-  const [biometric, setBiometric] = useState(true)
-  const [hideBalance, setHideBalance] = useState(false)
+  const { biometric, setBiometric, autoLock, setAutoLock, balanceHidden, toggleBalance, changePin } = useStore()
 
   return (
     <PageContainer>
@@ -34,11 +33,23 @@ export default function Privacy() {
               <div className="flex items-center justify-center w-8 h-8 rounded-[8px] bg-gray-50 dark:bg-gray-800">
                 <FinosIcon name="shield" size={16} className="text-gray-500 dark:text-gray-400" />
               </div>
-              <span className="text-[13px] font-semibold text-[#013D7C] dark:text-white">Biometric Lock</span>
+              <span className="text-[13px] font-semibold text-[#013D7C] dark:text-white">Auto Lock (App Close)</span>
+            </div>
+            <Toggle on={autoLock} onToggle={() => setAutoLock(!autoLock)} />
+          </div>
+          <div className="px-4 py-3.5 flex items-center justify-between border-b border-gray-50 dark:border-gray-700/50">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-8 h-8 rounded-[8px] bg-gray-50 dark:bg-gray-800">
+                <FinosIcon name="fingerprint" size={16} className="text-gray-500 dark:text-gray-400" />
+              </div>
+              <span className="text-[13px] font-semibold text-[#013D7C] dark:text-white">Biometric Unlock</span>
             </div>
             <Toggle on={biometric} onToggle={() => setBiometric(!biometric)} />
           </div>
-          <button className="px-4 py-3.5 flex items-center justify-between w-full text-left border-b border-gray-50 dark:border-gray-700/50 active:bg-gray-50 dark:active:bg-gray-800 transition-colors">
+          <button 
+            onClick={changePin}
+            className="px-4 py-3.5 flex items-center justify-between w-full text-left border-b border-gray-50 dark:border-gray-700/50 active:bg-gray-50 dark:active:bg-gray-800 transition-colors"
+          >
             <div className="flex items-center gap-3">
               <div className="flex items-center justify-center w-8 h-8 rounded-[8px] bg-gray-50 dark:bg-gray-800">
                 <FinosIcon name="lock" size={16} className="text-gray-500 dark:text-gray-400" />
@@ -54,7 +65,7 @@ export default function Privacy() {
               </div>
               <span className="text-[13px] font-semibold text-[#013D7C] dark:text-white">Hide Balances by Default</span>
             </div>
-            <Toggle on={hideBalance} onToggle={() => setHideBalance(!hideBalance)} />
+            <Toggle on={balanceHidden} onToggle={toggleBalance} />
           </div>
         </div>
       </div>

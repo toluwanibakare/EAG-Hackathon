@@ -12,6 +12,7 @@ interface AppState {
   unlock: (pin: string) => boolean
   lock: () => void
   logout: () => void
+  changePin: () => void
 
   hasOnboarded: boolean
   setOnboarded: (val: boolean) => void
@@ -54,6 +55,18 @@ interface AppState {
   aiLanguage: string
   setAiLanguage: (lang: string) => void
 
+  pushNotifications: boolean
+  setPushNotifications: (val: boolean) => void
+
+  emailNotifications: boolean
+  setEmailNotifications: (val: boolean) => void
+
+  autoLock: boolean
+  setAutoLock: (val: boolean) => void
+
+  biometric: boolean
+  setBiometric: (val: boolean) => void
+
   currency: string
   setCurrency: (curr: string) => void
 
@@ -85,6 +98,12 @@ export const useStore = create<AppState>((set, get) => ({
       document.documentElement.classList.remove('dark')
     }
     set({ darkMode: next })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ dark_mode: next }).eq('wallet_address', walletAddress).then()
+      })
+    }
   },
 
   isLocked: true,
@@ -102,6 +121,10 @@ export const useStore = create<AppState>((set, get) => ({
     return false
   },
   lock: () => set({ isLocked: true }),
+  changePin: () => {
+    localStorage.removeItem('runda-pin')
+    set({ pin: '', isLocked: true })
+  },
   logout: () => {
     localStorage.removeItem('runda-pin')
     localStorage.removeItem('runda-onboarded')
@@ -128,6 +151,12 @@ export const useStore = create<AppState>((set, get) => ({
   setUserName: (name) => {
     localStorage.setItem('runda-username', name)
     set({ userName: name })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ user_name: name }).eq('wallet_address', walletAddress).then()
+      })
+    }
   },
 
   walletAddress: localStorage.getItem('runda-wallet') || '',
@@ -141,10 +170,25 @@ export const useStore = create<AppState>((set, get) => ({
     if (pic) localStorage.setItem('runda-pfp', pic)
     else localStorage.removeItem('runda-pfp')
     set({ profilePicture: pic })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ profile_picture: pic }).eq('wallet_address', walletAddress).then()
+      })
+    }
   },
 
   balanceHidden: false,
-  toggleBalance: () => set((s) => ({ balanceHidden: !s.balanceHidden })),
+  toggleBalance: () => {
+    const next = !get().balanceHidden
+    set({ balanceHidden: next })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ hide_balance: next }).eq('wallet_address', walletAddress).then()
+      })
+    }
+  },
 
   pools: defaultPools,
   setPools: (pools) => set({ pools }),
@@ -207,12 +251,66 @@ export const useStore = create<AppState>((set, get) => ({
   setAiLanguage: (lang) => {
     localStorage.setItem('runda-lang', lang)
     set({ aiLanguage: lang })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ language: lang }).eq('wallet_address', walletAddress).then()
+      })
+    }
+  },
+
+  pushNotifications: localStorage.getItem('runda-push') === 'true',
+  setPushNotifications: (val) => {
+    localStorage.setItem('runda-push', String(val))
+    set({ pushNotifications: val })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ push_notifications: val }).eq('wallet_address', walletAddress).then()
+      })
+    }
+  },
+
+  emailNotifications: localStorage.getItem('runda-email') === 'true',
+  setEmailNotifications: (val) => {
+    localStorage.setItem('runda-email', String(val))
+    set({ emailNotifications: val })
+  },
+
+  autoLock: localStorage.getItem('runda-autolock') !== 'false', // default true
+  setAutoLock: (val) => {
+    localStorage.setItem('runda-autolock', String(val))
+    set({ autoLock: val })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ auto_lock: val }).eq('wallet_address', walletAddress).then()
+      })
+    }
+  },
+
+  biometric: localStorage.getItem('runda-biometric') === 'true',
+  setBiometric: (val) => {
+    localStorage.setItem('runda-biometric', String(val))
+    set({ biometric: val })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ biometric: val }).eq('wallet_address', walletAddress).then()
+      })
+    }
   },
 
   currency: localStorage.getItem('runda-currency') || 'cNGN',
   setCurrency: (curr) => {
     localStorage.setItem('runda-currency', curr)
     set({ currency: curr })
+    const walletAddress = get().walletAddress
+    if (walletAddress) {
+      import('../lib/supabase').then(({ supabase }) => {
+        supabase.from('users').update({ currency: curr }).eq('wallet_address', walletAddress).then()
+      })
+    }
   },
 
   incomes: mockIncome,
