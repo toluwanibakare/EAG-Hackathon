@@ -54,7 +54,7 @@ export function useAgent(): UseAgentReturn {
           allocations = [{
             pools: [
               { name: 'Savings', percentage: 50, type: 'savings' as const, restriction: 'goal_locked' as const, icon: 'piggy-bank', color: '#013D7C' },
-              { name: 'Expenses', percentage: 30, type: 'expense' as const, restriction: 'available' as const, icon: 'wallet', color: '#E8B931' },
+              { name: 'Expenses', percentage: 30, type: 'needs' as const, restriction: 'available' as const, icon: 'wallet', color: '#E8B931' },
               { name: 'Investments', percentage: 20, type: 'investment' as const, restriction: 'restricted' as const, icon: 'trending-up', color: '#2E7D32' },
             ]
           }]
