@@ -6,38 +6,38 @@ import {
   HSK_BLOCK_EXPLORER,
 } from './hsk'
 
-export const hskMainnet = {
+import { defineChain } from 'viem'
+
+export const hskMainnet = defineChain({
   id: HSK_MAINNET_CHAIN_ID,
-  name: 'HSK Chain',
+  name: 'HashKey Chain',
   nativeCurrency: { name: 'HSK', symbol: 'HSK', decimals: 18 },
   rpcUrls: {
     default: { http: [HSK_MAINNET_RPC] },
-    public: { http: [HSK_MAINNET_RPC] },
   },
   blockExplorers: {
     default: { name: 'Blockscout', url: HSK_BLOCK_EXPLORER },
   },
-} as const
+})
 
-export const hskTestnet = {
+export const hskTestnet = defineChain({
   id: 133,
-  name: 'HSK Testnet',
+  name: 'HashKey Testnet',
   nativeCurrency: { name: 'HSK', symbol: 'HSK', decimals: 18 },
   rpcUrls: {
     default: { http: [HSK_TESTNET_RPC] },
-    public: { http: [HSK_TESTNET_RPC] },
   },
   blockExplorers: {
     default: { name: 'Blockscout', url: 'https://testnet-explorer.hsk.xyz' },
   },
-} as const
+})
 
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { mainnet } from 'wagmi/chains'
 
 export const config = getDefaultConfig({
   appName: 'Runda',
-  projectId: 'cd34d3d82a6fdf3d1cde0eef2a926f04', // 100% unrestricted project ID
+  projectId: 'deb868e4a51e3827e01fd18c9b2bc896', // User's project ID
   chains: [hskMainnet, hskTestnet, mainnet],
 })
 
