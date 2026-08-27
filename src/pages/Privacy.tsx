@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { PageContainer } from '../components/layout/PageContainer'
+import { useStore } from '../store/useStore'
 import { Header } from '../components/layout/Header'
 import { FinosIcon } from '../components/icons/FinosIcons'
 
