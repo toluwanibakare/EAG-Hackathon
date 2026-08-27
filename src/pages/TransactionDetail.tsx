@@ -5,6 +5,7 @@ import { PageContainer } from '../components/layout/PageContainer'
 import { Header } from '../components/layout/Header'
 import { FinosIcon } from '../components/icons/FinosIcons'
 import { EmptyState } from '../components/ui/EmptyState'
+import html2canvas from 'html2canvas'
 
 const statusConfig: Record<string, { label: string; icon: string; color: string; bg: string }> = {
   completed: { label: 'Completed', icon: 'check-circle', color: 'text-[#2E7D32]', bg: 'bg-[#E8F5E9]' },
@@ -58,14 +59,21 @@ export default function TransactionDetail() {
     : null
 
   const downloadReceipt = async () => {
-    const el = document.getElementById('receipt-container')
-    if (!el) return
-    const html2canvas = (await import('html2canvas')).default
-    const canvas = await html2canvas(el, { backgroundColor: darkMode ? '#0B1320' : '#F7F8FB', scale: 2 })
-    const link = document.createElement('a')
-    link.download = `Receipt_${txn.reference}.png`
-    link.href = canvas.toDataURL('image/png')
-    link.click()
+    try {
+      const el = document.getElementById('receipt-container')
+      if (!el) return
+      const canvas = await html2canvas(el, { 
+        backgroundColor: darkMode ? '#0B1320' : '#F7F8FB', 
+        scale: 2,
+        useCORS: true 
+      })
+      const link = document.createElement('a')
+      link.download = `Receipt_${txn.reference}.png`
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    } catch (err) {
+      console.error("Error generating receipt:", err)
+    }
   }
 
   return (
